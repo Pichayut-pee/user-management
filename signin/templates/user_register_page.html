@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static '/font-awesome/css/font-awesome.min.css' %}">
+</head>
+<body>
+
+    <div class="container">
+        <div class="screen">
+            <div class="screen__content">
+
+                <form class="signup" id=login_form" method="post">
+                    <h2> Sign up </h2>
+                    <div class="text__field">
+                        <i class="text__icon fa fa-user"></i>
+                        <input class="text__input" type="text" id="username" placeholder="username" name="username">
+                        <div id="error_msg_username" hidden="hidden" class="error-message"></div>
+                    </div>
+                     <div class="text__field">
+                        <i class="text__icon fa fa-envelope"></i>
+                        <input class="text__input" type="text" id="email" placeholder="email" name="email">
+                        <div id="error_msg_email" hidden="hidden" class="error-message"></div>
+                    </div>
+                   <div class="text__field">
+                        <i class="text__icon fa fa-user"></i>
+                        <input class="text__input" type="text" id="name" placeholder="name" name="Name">
+                        <div id="error_msg_name" hidden="hidden" class="error-message"></div>
+                    </div>
+                    <div class="text__field">
+                        <i class="text__icon fa fa-lock"></i>
+                        <input class="text__input" type="password" id="password" name="password" placeholder="Password">
+                        <div id="error_msg_password" hidden="hidden" class="error-message"></div>
+                    </div>
+                     <div class="text__field">
+                        <i class="text__icon fa fa-check-square"></i>
+                        <input class="text__input" type="password" id="confirm_password" name="confirm_password" placeholder="Confirm password">
+                        <div id="error_msg_confirm_password" hidden="hidden" class="error-message"></div>
+                    </div>
+                    <div id="error_msg" hidden="hidden" class="error-message"></div>
+
+                    <button type="Button" class="button form__submit" onclick="register()">
+                        <span class="button__text">Register</span>
+                        <i class="button__icon fa fa-chevron-right"></i>
+                    </button>
+                    <input type="hidden" name="line_user_id" id="line_user_id" value="{{ line_user_id }}">
+                </form>
+
+            </div>
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                <span class="screen__background__shape screen__background__shape3"></span>
+                <span class="screen__background__shape screen__background__shape2"></span>
+                <span class="screen__background__shape screen__background__shape1"></span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+async function setCustomValidity(fieldId,message){
+    document.getElementById(fieldId).className = 'text__input__error';
+    document.getElementById('error_msg_' +fieldId ).hidden = false
+    document.getElementById('error_msg_' +fieldId ).innerHTML = message;
+}
+async function resetField(){
+
+     document.getElementById('error_msg_username' ).hidden = true;
+     document.getElementById('error_msg_password' ).hidden = true;
+     document.getElementById('error_msg_name' ).hidden = true;
+     document.getElementById('error_msg_email' ).hidden = true;
+     document.getElementById('error_msg_confirm_password' ).hidden = true;
+     document.getElementById('username').className = 'text__input';
+     document.getElementById('password').className = 'text__input';
+     document.getElementById('email').className = 'text__input';
+     document.getElementById('name').className = 'text__input';
+     document.getElementById('confirm_password').className = 'text__input';
+}
+
+async function register(){
+    this.resetField()
+    const username = document.getElementById('username').value
+
+    if(!username || username ===''){
+        await this.setCustomValidity('username', "*Required");
+        return;
+    }
+
+    const email = document.getElementById('email').value
+
+    if(!email || email ===''){
+        await this.setCustomValidity('email', "*Required");
+        return;
+    }
+
+    const name = document.getElementById('name').value
+
+    if(!name || name ===''){
+        await this.setCustomValidity('name', "*Required");
+        return;
+    }
+
+    const password = document.getElementById('password').value
+     if(!password || password ===''){
+        await this.setCustomValidity('password', "*Required");
+        return;
+    }
+    const confirm_password = document.getElementById('confirm_password').value
+     if(!confirm_password || confirm_password ===''){
+        await this.setCustomValidity('confirm_password',  "*Required");
+        return;
+    }
+
+    if(confirm_password !== password){
+        await this.setCustomValidity('confirm_password', "Password mismatch");
+        return;
+    }
+    const line_user_id = document.getElementById('line_user_id').value
+    const client_id = "{{client_id}}";
+    const client_secret = "{{client_secret}}";
+
+    const apiUrl = '/register';
+    const data = {
+      username: username,
+      email: email,
+      name: name,
+      password: password,
+      line_user_id: line_user_id
+    }
+
+     const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'clientId':client_id,
+        'clientSecret':client_secret
+      },
+      body: JSON.stringify(data),
+    }
+    try{
+        const response = await  fetch(apiUrl, requestOptions)
+        if(!response.ok){
+            document.getElementById("error_msg").innerHTML = "Something went wrong";
+            document.getElementById('error_msg').hidden = false
+            return;
+        }
+        window.location.replace('/login_page')
+    }catch (error){
+        console.error(error)
+        document.getElementById("error_msg").innerHTML = "Unexpected error";
+        document.getElementById('error_msg').hidden = false
+    }
+}
+
+</script>

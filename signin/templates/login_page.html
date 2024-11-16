@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">  <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="{% static '/font-awesome/css/font-awesome.min.css' %}">
+</head>
+<body>
+
+    <div class="container">
+        <div class="screen">
+            <div class="screen__content">
+                {% block message %}
+                {% if error_message %}
+                    <div class="toast_error_message">
+                        {{ error_message }}
+                    </div>
+                {% endif %}
+                {% endblock %}
+                <form class="login" id=login_form" method="post">
+                   <img src="../static/image/logo_login.png" alt="Logo" class="logo1">
+                    <div class="text__field">
+                        <i class="text__icon fa fa-user"></i>
+                        <input class="text__input" type="text" id="username" placeholder="User name" name="username">
+                        <div id="error_msg_username" hidden="hidden" class="error-message"></div>
+                    </div>
+                    <div class="text__field">
+                        <i class="text__icon fa fa-lock"></i>
+                        <input class="text__input" type="password" id="password" name="password" placeholder="Password">
+                        <div id="error_msg_password" hidden="hidden" class="error-message"></div>
+                    </div>
+                    <div id="error_msg" hidden="hidden" class="error-message"></div>
+
+                    <button type="Button" class="button form__submit" onclick="login()">
+                        <span class="button__text">Log In</span>
+                        <i class="button__icon fa fa-chevron-right"></i>
+                    </button>
+                </form>
+
+            </div>
+            <div class="social-signup">
+
+                <div class="social-icons">
+                     <input type="image" src="../static/image/line_signup_button.png" class="social_signup_button" onclick="line_signup()"/>
+                </div>
+            </div>
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                <span class="screen__background__shape screen__background__shape3"></span>
+                <span class="screen__background__shape screen__background__shape2"></span>
+                <span class="screen__background__shape screen__background__shape1"></span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+
+async function line_signup(){
+    let line_signup_url = "{{line_signup_url}}";
+    line_signup_url = line_signup_url.replace(/&amp;/g, '&');
+    console.log('line_signup_url',line_signup_url)
+    window.location.replace(line_signup_url)
+}
+
+async function setCustomValidity(fieldId,message){
+    document.getElementById(fieldId).className = 'text__input__error';
+    document.getElementById('error_msg_' +fieldId ).hidden = false
+    document.getElementById('error_msg_' +fieldId ).innerHTML = message;
+}
+
+async function resetField(){
+     document.getElementById('error_msg_username' ).innerHTML = "";
+     document.getElementById('error_msg_password' ).innerHTML = "";
+     document.getElementById('error_msg_username' ).hidden = true;
+     document.getElementById('error_msg_password' ).hidden = true;
+     document.getElementById('username').className = 'text__input';
+     document.getElementById('password').className = 'text__input';
+}
+
+async function login(){
+
+    this.resetField()
+    const client_id = "{{client_id}}";
+    const client_secret = "{{client_secret}}";
+    const username = document.getElementById('username').value
+
+
+    if(!username || username ===''){
+        await this.setCustomValidity('username',"*Required");
+        return;
+    }
+
+    const password = document.getElementById('password').value
+     if(!password || password ===''){
+        await this.setCustomValidity('password',"*Required");
+        return;
+    }
+    const apiUrl = '/login';
+    const data = {
+      username: username,
+      password: password,
+      grant_type: 'password'
+    }
+
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'clientId':client_id,
+        'clientSecret':client_secret
+
+      },
+      body: JSON.stringify(data),
+    }
+
+    try{
+        const response = await  fetch(apiUrl, requestOptions)
+        if(!response.ok){
+            document.getElementById("error_msg").innerHTML = "Invalid username/password";
+            document.getElementById('error_msg').hidden = false
+            return;
+        }
+        const data = await response.json()
+        await localStorage.setItem("access_token", data.access_token);
+        await localStorage.setItem("refresh_token", data.refresh_token);
+        window.location.replace(data.redirect_url+"?access_token="+data.access_token + "&refresh_token="+data.refresh_token)
+    }catch (error){
+        console.error(error)
+        document.getElementById("error_msg").innerHTML = "Unexpected error";
+        document.getElementById('error_msg').hidden = false
+    }
+
+ }
+
+
+</script>
