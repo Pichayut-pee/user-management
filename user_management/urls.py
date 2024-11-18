@@ -26,7 +26,8 @@ urlpatterns = [
     path('logout', signin_view.logout),
     path('line/redirect', signin_view.redirect_signup_line),
 
-    path('favorite_search', user_view.create_favorite_search),
+    path('create/favorite_search', user_view.create_favorite_search),
+    path('get/favorite_search', user_view.get_favorite_search),
     path('register', user_view.register),
     path('user/list', user_view.get_user_list),
 

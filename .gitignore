@@ -88,3 +88,4 @@ user/__pycache__/__init__.cpython-39.pyc
 user/__pycache__/admin.cpython-311.pyc
 user/__pycache__/admin.cpython-39.pyc
 /user_management/.env
+user/migrations/__pycache__/0011_rename_location_usersfavoritesearch_location_search_and_more.cpython-311.pyc

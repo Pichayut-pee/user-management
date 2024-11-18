@@ -38,5 +38,21 @@ class UsersFavoriteSearch(models.Model):
     toilet_search_to = models.IntegerField(default=99)
     floor_search_from = models.IntegerField(default=0)
     floor_search_to = models.IntegerField(default=0)
-    location = models.CharField(max_length=1000 ,blank=True, null=True)
+    location_search = models.CharField(max_length=1000 ,blank=True, null=True)
     desc_search = models.CharField(max_length=1000 ,blank=True, null=True)
+
+    def serialize(self):
+        return {
+            "price_search_from": self.price_search_from,
+            "price_search_to": self.price_search_to,
+            "space_search_from": self.space_search_from,
+            "space_search_to": self.space_search_to,
+            "room_search_from": self.room_search_from,
+            "room_search_to": self.room_search_to,
+            "toilet_search_from": self.toilet_search_from,
+            "toilet_search_to": self.toilet_search_to,
+            "floor_search_from": self.floor_search_from,
+            "floor_search_to": self.floor_search_to,
+            "location_search": self.location_search,
+            "desc_search": self.desc_search
+        }

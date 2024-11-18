@@ -38,11 +38,14 @@ def create_favorite_search(request):
 
 
 @api_view(['GET'])
-@authentication
-def get_user_favorite_search(request):
-    id = request.GET.get('id')
-    favorite_search = get_user_favorite_search_by_user_id(id)
-    return Response(favorite_search)
+@client_validate
+def get_favorite_search(request):
+    user_id = request.GET.get('user_id')
+    favorite_search = get_user_favorite_search_by_user_id(user_id)
+    if len(favorite_search) ==0 :
+        return JsonResponse({}, safe=False)
+    return JsonResponse([ret.serialize() for ret in favorite_search], safe=False)
+
 
 
 @api_view(['GET'])

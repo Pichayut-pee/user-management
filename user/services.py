@@ -61,6 +61,7 @@ def create_user_favorite_search(request):
     toilet_to = request.data.get('toilet_to') or 99
     floor_from = request.data.get('floor_from') or 0
     floor_to = request.data.get('floor_to') or 99
+    desc_search = request.data.get('desc_search')
     location = request.data.get('location')
 
     users = Users.objects.filter(username=username)
@@ -69,12 +70,14 @@ def create_user_favorite_search(request):
         raise UserNotFoundException
 
     try:
-        user_favorite_serach = UsersFavoriteSearch(user=users[0], price_from=price_from, price_to=price_to,
-                                                   space_from=space_from,
-                                                   space_to=space_to, room_from=room_from, room_to=room_to,
-                                                   toilet_from=toilet_from, toilet_to=toilet_to
-                                                   , floor_from=floor_from, floor_to=floor_to, location=location)
-        user_favorite_serach.save()
+        user_favorite_search = UsersFavoriteSearch(user=users[0], price_search_from=price_from, price_search_to=price_to,
+                                                   space_search_from=space_from,
+                                                   space_search_to=space_to, room_search_from=room_from, room_search_to=room_to,
+                                                   toilet_search_from=toilet_from, toilet_search_to=toilet_to
+                                                   , floor_search_from=floor_from, floor_search_to=floor_to, location_search=location
+                                                   , desc_search=desc_search
+                                                   )
+        user_favorite_search.save()
     except Exception as e:
         print(e)
         raise DatabaseErrorException
