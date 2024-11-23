@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-r__sc-db6=rrrf-g%+^iyiidekzi@vqw##pyxh(czz-@9_h(w#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['139.59.231.181','127.0.0.1']
+ALLOWED_HOSTS = ['139.59.231.181','127.0.0.1', '10.104.0.2']
 
 CACHES = {
     'default': {
@@ -138,7 +138,26 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    "formatters": {
+        "verbose": {
+            "format": "{name} {levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
 
+}
 STATIC_URL = 'static/'
 
 # Default primary key field type
