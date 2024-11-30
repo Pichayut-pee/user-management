@@ -40,6 +40,7 @@ class UsersFavoriteSearch(models.Model):
     floor_search_to = models.IntegerField(default=0)
     location_search = models.CharField(max_length=1000 ,blank=True, null=True)
     desc_search = models.CharField(max_length=1000 ,blank=True, null=True)
+    limit = models.IntegerField(default=5)
 
     def serialize(self):
         return {
@@ -54,5 +55,6 @@ class UsersFavoriteSearch(models.Model):
             "floor_search_from": self.floor_search_from,
             "floor_search_to": self.floor_search_to,
             "location_search": self.location_search,
-            "desc_search": self.desc_search
+            "desc_search": self.desc_search,
+            "limit": self.limit
         }

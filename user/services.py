@@ -63,6 +63,7 @@ def create_user_favorite_search(request):
     floor_to = request.data.get('floor_to') or 99
     desc_search = request.data.get('desc_search')
     location = request.data.get('location')
+    limit = request.data.get('limit')
 
     users = Users.objects.filter(username=username)
 
@@ -75,7 +76,7 @@ def create_user_favorite_search(request):
                                                    space_search_to=space_to, room_search_from=room_from, room_search_to=room_to,
                                                    toilet_search_from=toilet_from, toilet_search_to=toilet_to
                                                    , floor_search_from=floor_from, floor_search_to=floor_to, location_search=location
-                                                   , desc_search=desc_search
+                                                   , desc_search=desc_search,limit=limit
                                                    )
         user_favorite_search.save()
     except Exception as e:
