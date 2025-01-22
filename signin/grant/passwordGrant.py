@@ -32,7 +32,7 @@ class PasswordGrant(GrantTypeService):
         # checking password
         if check_hash(password, hashed_password) is False:
             raise AuthenticationException('Invalid username or password')
-        access_token, refresh_token = self.token_util.generate_oauth_token(users[0].username)
+        access_token, refresh_token = self.token_util.generate_oauth_token(users[0].username, users[0].id)
 
         # Store token in redis
         try:

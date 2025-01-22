@@ -50,7 +50,7 @@ def login(request):
     try:
         signin_service = SigninService()
         access_token, refresh_token = signin_service.login(request)
-        redirect_url = os.getenv("CONDO_REDIRECT_URL")
+        redirect_url = os.getenv("LOGIN_SUCCESS_REDIRECT_URL")
         return JsonResponse(
             {"access_token": access_token, "refresh_token": refresh_token, "redirect_url": redirect_url})
     except AuthenticationException:
@@ -73,6 +73,25 @@ def logout(request):
         return HttpResponse('Internal server error', status=500)
 
 
+def redirect_signup_line(request):
+    try:
+        client_id = os.getenv("CLIENT_ID")
+        client_secret = os.getenv("CLIENT_SECRET")
+
+        signin_service = SigninService()
+        profile_claims = signin_service.get_line_userprofile(request)
+        template = loader.get_template('user_register_page.html')
+        context = {
+            "line_user_id": profile_claims['sub'],
+            "client_id": client_id,
+            "client_secret": client_secret
+        }
+    except DuplicateUserException as e:
+        template = loader.get_template('login_page.html')
+        context = {
+            "error_message": e.message
+        }
+    return HttpResponse(template.render(context, request))
 def redirect_signup_line(request):
     try:
         client_id = os.getenv("CLIENT_ID")

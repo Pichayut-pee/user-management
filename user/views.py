@@ -8,6 +8,8 @@ from signin.utils.exception import BadRequestException
 from user.services import register_user, create_user_favorite_search, \
     get_user_favorite_search_by_user_id, filter_user_list
 from django.http import JsonResponse
+from django.template import loader
+from django.http import HttpResponse
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -53,3 +55,7 @@ def get_favorite_search(request):
 def get_user_list(request):
     rets = filter_user_list(request)
     return JsonResponse([ret.serialize() for ret in rets], safe=False)
+@api_view(['GET'])
+def user_favorite_search_page(request):
+    template = loader.get_template('user_favorite_search_page.html')
+    return HttpResponse(template.render({}, request))

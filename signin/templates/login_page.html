@@ -128,7 +128,7 @@ async function login(){
         const data = await response.json()
         await localStorage.setItem("access_token", data.access_token);
         await localStorage.setItem("refresh_token", data.refresh_token);
-        window.location.replace(data.redirect_url+"?access_token="+data.access_token + "&refresh_token="+data.refresh_token)
+        window.location.replace(data.redirect_url)
     }catch (error){
         console.error(error)
         document.getElementById("error_msg").innerHTML = "Unexpected error";

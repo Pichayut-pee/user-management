@@ -13,10 +13,11 @@ class TokenUtils:
         load_dotenv()
         self.redis_conn = get_redis_connection("default")
 
-    def generate_oauth_token(self,sub):
+    def generate_oauth_token(self,sub,user_id):
         tz = timezone(timedelta(hours=7))
 
         access_token = jwt.encode({'iss': "authorization-server",
+                                   'user_id': user_id,
                                    'sub': sub,
                                    "aud": "example.com",
                                    "exp": datetime.now(tz=tz) + timedelta(
