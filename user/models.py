@@ -27,6 +27,7 @@ class UsersProfile(models.Model):
 
 
 class UsersFavoriteSearch(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     price_search_from = models.IntegerField(default=0)
     price_search_to = models.IntegerField(default=100000000)
@@ -44,6 +45,7 @@ class UsersFavoriteSearch(models.Model):
 
     def serialize(self):
         return {
+            "id": self.id,
             "price_search_from": self.price_search_from,
             "price_search_to": self.price_search_to,
             "space_search_from": self.space_search_from,

@@ -55,13 +55,14 @@ class TokenUtils:
         # extract token
         claims = self.decode_token(token)
         sub = claims['sub']
+        user_id = claims['user_id']
 
         stored_token = self.redis_conn.get(sub + "access_token") or self.redis_conn.get(sub + "refresh_token")
         stored_token = stored_token.decode(encoding="utf-8")
         if stored_token is None or stored_token != token:
             return False
 
-        return True, sub
+        return True, sub, user_id
 
     def revoke_token(self, token):
         # extract token

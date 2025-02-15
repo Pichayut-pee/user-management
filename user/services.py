@@ -13,12 +13,8 @@ logger = logging.getLogger(__name__)
 
 
 @transaction.atomic
-def register_user(request):
-    username = request.data.get('username')
-    password = request.data.get('password')
-    name = request.data.get('name')
-    email = request.data.get('email')
-    line_user_id = request.data.get('line_user_id')
+def register_user(username, password, name, email, line_user_id):
+
     role = 'undefined'
     try:
         existing_user = Users.objects.filter(username=username)
@@ -49,36 +45,35 @@ def get_user_favorite_search_by_user_id(id):
     return user_favorite_search
 
 
-def create_user_favorite_search(request):
-    username = request.username
+def create_user_favorite_search(favorite_search_id
+                                , user_id
+                                , price_from
+                                , price_to
+                                , space_from
+                                , space_to
+                                , room_from
+                                , room_to
+                                ,toilet_from
+                                , toilet_to
+                                , floor_from
+                                , floor_to
+                                , desc_search
+                                , location
+                                , limit):
 
-    price_from = request.data.get('price_from').replace(',', '') or 1
-    price_to = request.data.get('price_to').replace(',', '') or 100000000
-    space_from = request.data.get('space_from') or -1
-    space_to = request.data.get('space_to') or 999
-    room_from = request.data.get('room_from') or -1
-    room_to = request.data.get('room_to') or 99
-    toilet_from = request.data.get('toilet_from') or -1
-    toilet_to = request.data.get('toilet_to') or 99
-    floor_from = request.data.get('floor_from') or -1
-    floor_to = request.data.get('floor_to') or 99
-    desc_search = request.data.get('desc_search')
-    location = request.data.get('location')
     if location is None:
         raise BadRequestException('Location is required')
 
-    limit = request.data.get('limit') or 20
-
-    users = Users.objects.filter(username=username)
+    users = Users.objects.filter(id=user_id)
 
     if len(users) == 0:
         raise UserNotFoundException
 
-    if users[0].tier == 0:
-        raise BadRequestException('You need to upgrade to premium to use this')
+    # if users[0].tier == 0:
+    #     raise BadRequestException('You need to upgrade to premium to use this')
     # if exist update
     try:
-        user_favorite_search = UsersFavoriteSearch.objects.filter(user=users[0])
+        user_favorite_search = UsersFavoriteSearch.objects.filter(user=users[0], id=favorite_search_id)
         if len(user_favorite_search) > 0:
             user_favorite_search[0].price_search_from = price_from
             user_favorite_search[0].price_search_to = price_to
@@ -116,10 +111,8 @@ def create_user_favorite_search(request):
         raise DatabaseErrorException
 
 
-def filter_user_list(request):
-    page = request.GET.get('page', 1)
-    page_size = request.GET.get('page_size', 10)
-    tier = request.GET.get('tier', 0)
+def filter_user_list(page, page_size, tier):
+
     try:
         users = Users.objects.filter(tier=tier)
         ret = users[page_size * (page - 1):page_size * page]

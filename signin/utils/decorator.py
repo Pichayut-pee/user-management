@@ -21,8 +21,10 @@ def authentication(view_function):
 
         try:
             token_util = TokenUtils()
-            _,sub = token_util.is_valid_token(access_token)
+            _,sub,user_id = token_util.is_valid_token(access_token)
             request.username = sub
+            request.user_id = user_id
+
         except Exception as e:
             print('Error:', e)
             return HttpResponse('Internal server error', 500)

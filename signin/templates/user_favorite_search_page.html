@@ -25,40 +25,83 @@
                 {% endif %}
                 {% endblock %}
                 <form class="user_settings" id=user_condo_favorite">
-
-                  <label for="user_favorite_location">  <i class="button__icon fa fa-map-o"></i> เลือกคอนโด</label>
-                    <select name="user_favorite_location" id="user_favorite_location">
-                      <option value="พลัม_แจ้งวัฒนะ_สเตชั่น">พลัม แจ้งวัฒนะ สเตชั่น</option>
-                      <option value="ดีคอนโด_จรัญ_บางขุนนนท์">ดีคอนโด จรัญ บางขุนนนท์</option>
-                      <option value="ดีคอนโด_รามอินทรา">ดีคอนโด รามอินทรา</option>
-                      <option value="ดีคอนโด_รามอินทรา">ดีคอนโด รามอินทรา</option>
-                      <option value="รีเจ้นท์ โฮม 18">รีเจ้นท์ โฮม 18</option>
-                      <option value="รีเจ้นท์ โฮม 15">รีเจ้นท์ โฮม 15</option>
+                   <label>Condo1</label>
+                   <hr class="rounded"/>
+                  <input type="hidden" id="user_favorite_id1" value="{{favorite_search_1.id}}">
+                  <label for="user_favorite_location1">  <i class="button__icon fa fa-map-o"></i> เลือกคอนโด</label>
+                    <select name="user_favorite_location" id="user_favorite_location1">
+                      <option value="พลัม,แจ้งวัฒนะ,สเตชั่น" {% if favorite_search_1.location_search == 'พลัม,แจ้งวัฒนะ,สเตชั่น' %}selected{% endif %}>พลัม แจ้งวัฒนะ สเตชั่น</option>
+                      <option value="ลุมพินี,เพลส,รามอินทรา,หลักสี" {% if favorite_search_1.location_search == 'ลุมพินี,เพลส,รามอินทรา,หลักสี' %}selected{% endif %}>ลุมพินี เพลส รามอินทรา หลักสี่</option>
+                      <option value="ลุมพินี,วิลล์รามอินทรา,หลักสี่" {% if favorite_search_1.location_search == 'ลุมพินี,วิลล์รามอินทรา,หลักสี่' %}selected{% endif %}>ลุมพินี วิลล์รามอินทรา หลักสี่่</option>
+                      <option value="ดีคอนโด,จรัญ,บางขุนนนท์" {% if favorite_search_1.location_search == 'ดีคอนโด,จรัญ,บางขุนนนท์' %}selected{% endif %}>ดีคอนโด จรัญ บางขุนนนท์</option>
+                      <option value="ดีคอนโด,รามอินทรา" {% if favorite_search_1.location_search == 'ดีคอนโด,รามอินทรา' %}selected{% endif %}>ดีคอนโด รามอินทรา</option>
+                      <option value="รีเจ้นท์,โฮม 18" {% if favorite_search_1.location_search == 'รีเจ้นท์,โฮม 18' %}selected{% endif %}>รีเจ้นท์ โฮม 18</option>
+                      <option value="รีเจ้นท์,โฮม 15" {% if favorite_search_1.location_search == 'รีเจ้นท์,โฮม 15' %}selected{% endif %}>รีเจ้นท์ โฮม 15</option>
                     </select>
                     <div class="text__field">
-                        <label for="user_favorite_space_from"><i class="button__icon fa fa-home"></i> ขนาดห้องที่ต้องการ (ตร.ม.)</label>
-                        <input  name="user_favorite_space_from"  type="number" id="user_favorite_space_from" class="txt__input" value="0" min="0">
+                        <label for="user_favorite_space_from1"><i class="button__icon fa fa-home"></i> ขนาดห้องที่ต้องการ (ตร.ม.)</label>
+                        <input  name="user_favorite_space_from"  type="number" id="user_favorite_space_from1" class="txt__input" value="{% if favorite_search_1 %}{{ favorite_search_1.space_search_from }}{% else %}0{% endif %}" min="0">
                         <span class="focus-border"></span>
                         <label class="txt__center_label"> ถึง </label>
-                        <input  name="user_favorite_space_to"  type="number"   id="user_favorite_space_to" class="txt__input" value="99" min="0">
+                        <input  name="user_favorite_space_to"  type="number"   id="user_favorite_space_to1" class="txt__input" value="{% if favorite_search_1 %}{{ favorite_search_1.space_search_to }}{% else %}99{% endif %}" min="0">
                         <span class="focus-border"></span>
                     </div>
                     <div class="text__field">
-                        <label for="user_favorite_price_from"><i class="button__icon fa fa-money"></i> ช่วงราคาที่ต้องการ (บาท)</label>
-                        <input  name="user_favorite_price_from" type="text" id="user_favorite_price_from" class="txt__input" value="0" min="900000" onblur="numberWithCommas('user_favorite_price_from')">
+                        <label for="user_favorite_price_from1"><i class="button__icon fa fa-money"></i> ช่วงราคาที่ต้องการ (บาท)</label>
+                        <input  name="user_favorite_price_from" type="text" id="user_favorite_price_from1" class="txt__input" value="{% if favorite_search_1 %}{{ favorite_search_1.price_search_from }}{% else %}0{% endif %}" min="100000" onblur="numberWithCommas('user_favorite_price_from')">
                         <span class="focus-border"></span>
                         <label class="txt__center_label"> ถึง </label>
-                        <input  name="user_favorite_price_to" type="text" id="user_favorite_price_to" class="txt__input" value="10,000,000" min="900000">
+                        <input  name="user_favorite_price_to" type="text" id="user_favorite_price_to1" class="txt__input" value="{% if favorite_search_1 %}{{ favorite_search_1.price_search_to }}{% else %}10,000,000{% endif %}" min="100000">
                     </div>
                    <div class="text__field">
-                        <label for="user_favorite_floor_from"><i class="button__icon fa fa-building"></i> ชั้นที่ต้องการ </label>
-                        <input  name="user_favorite_floor_from" type="number" id="user_favorite_floor_from" class="txt__input" value="0" min="0">
+                        <label for="user_favorite_floor_from1"><i class="button__icon fa fa-building"></i> ชั้นที่ต้องการ </label>
+                        <input  name="user_favorite_floor_from" type="number" id="user_favorite_floor_from1" class="txt__input" value="{% if favorite_search_1 %}{{ favorite_search_1.floor_search_from }}{% else %}0{% endif %}" min="0">
                         <span class="focus-border"></span>
                         <label class="txt__center_label"> ถึง </label>
-                        <input  name="user_favorite_floor_to" type="number" id="user_favorite_floor_to" class="txt__input" value="99" min="99">
+                        <input  name="user_favorite_floor_to" type="number" id="user_favorite_floor_to1" class="txt__input" value="{% if favorite_search_1 %}{{ favorite_search_1.floor_search_to }}{% else %}99{% endif %}" min="99">
                     </div>
-                    <div id="error_msg" hidden="hidden" class="error-message"></div>
-                    <button type="Button" class="button__submit form__submit" onclick="save_search_favorite()">
+                     <div id="error_msg1" hidden="hidden" class="error-message"></div>
+                     <button type="Button" class="button__submit form__submit" onclick="save_search_favorite1()">
+                        <span class="button__text">Save</span>
+                        <i class="button__icon fa fa-chevron-right"></i>
+                    </button>
+                    <label>Condo2</label>
+                    <hr class="rounded">
+                     <input type="hidden" id="user_favorite_id2" value="{{favorite_search_2.id}}">
+                    <label for="user_favorite_location2">  <i class="button__icon fa fa-map-o"></i> เลือกคอนโด</label>
+                    <select name="user_favorite_location" id="user_favorite_location2">
+                      <option value="พลัม,แจ้งวัฒนะ,สเตชั่น" {% if favorite_search_2.location_search == 'พลัม,แจ้งวัฒนะ,สเตชั่น' %}selected{% endif %}>พลัม แจ้งวัฒนะ สเตชั่น</option>
+                      <option value="ลุมพินี,เพลส,รามอินทรา,หลักสี" {% if favorite_search_2.location_search == 'ลุมพินี,เพลส,รามอินทรา,หลักสี' %}selected{% endif %}>ลุมพินี เพลส รามอินทรา หลักสี่</option>
+                      <option value="ลุมพินี,วิลล์รามอินทรา,หลักสี่" {% if favorite_search_2.location_search == 'ลุมพินี,วิลล์รามอินทรา,หลักสี่' %}selected{% endif %}>ลุมพินี วิลล์รามอินทรา หลักสี่่</option>
+                      <option value="ดีคอนโด,จรัญ,บางขุนนนท์" {% if favorite_search_2.location_search == 'ดีคอนโด,จรัญ,บางขุนนนท์' %}selected{% endif %}>ดีคอนโด จรัญ บางขุนนนท์</option>
+                      <option value="ดีคอนโด,รามอินทรา" {% if favorite_search_2.location_search == 'ดีคอนโด,รามอินทรา' %}selected{% endif %}>ดีคอนโด รามอินทรา</option>
+                      <option value="รีเจ้นท์,โฮม 18" {% if favorite_search_2.location_search == 'รีเจ้นท์,โฮม 18' %}selected{% endif %}>รีเจ้นท์ โฮม 18</option>
+                      <option value="รีเจ้นท์,โฮม 15" {% if favorite_search_2.location_search == 'รีเจ้นท์,โฮม 15' %}selected{% endif %}>รีเจ้นท์ โฮม 15</option>
+                    </select>
+                    <div class="text__field">
+                        <label for="user_favorite_space_from1"><i class="button__icon fa fa-home"></i> ขนาดห้องที่ต้องการ (ตร.ม.)</label>
+                        <input  name="user_favorite_space_from"  type="number" id="user_favorite_space_from2" class="txt__input" value="{% if favorite_search_2 %}{{ favorite_search_2.space_search_from }}{% else %}0{% endif %}" min="0">
+                        <span class="focus-border"></span>
+                        <label class="txt__center_label"> ถึง </label>
+                        <input  name="user_favorite_space_to"  type="number"   id="user_favorite_space_to2" class="txt__input" value="{% if favorite_search_2 %}{{ favorite_search_2.space_search_to }}{% else %}99{% endif %}" min="0">
+                        <span class="focus-border"></span>
+                    </div>
+                    <div class="text__field">
+                        <label for="user_favorite_price_from1"><i class="button__icon fa fa-money"></i> ช่วงราคาที่ต้องการ (บาท)</label>
+                        <input  name="user_favorite_price_from" type="text" id="user_favorite_price_from2" class="txt__input" value="{% if favorite_search_2 %}{{ favorite_search_2.price_search_from }}{% else %}0{% endif %}" min="100000" onblur="numberWithCommas('user_favorite_price_from')">
+                        <span class="focus-border"></span>
+                        <label class="txt__center_label"> ถึง </label>
+                        <input  name="user_favorite_price_to" type="text" id="user_favorite_price_to2" class="txt__input" value="{% if favorite_search_2 %}{{ favorite_search_2.price_search_to }}{% else %}10,000,000{% endif %}" min="100000">
+                    </div>
+                   <div class="text__field">
+                        <label for="user_favorite_floor_from1"><i class="button__icon fa fa-building"></i> ชั้นที่ต้องการ </label>
+                        <input  name="user_favorite_floor_from" type="number" id="user_favorite_floor_from2" class="txt__input" value="{% if favorite_search_2 %}{{ favorite_search_2.floor_search_from }}{% else %}0{% endif %}" min="0">
+                        <span class="focus-border"></span>
+                        <label class="txt__center_label"> ถึง </label>
+                        <input  name="user_favorite_floor_to" type="number" id="user_favorite_floor_to2" class="txt__input" value="{% if favorite_search_2 %}{{ favorite_search_2.floor_search_to }}{% else %}99{% endif %}" min="99">
+                    </div>
+                    <div id="error_msg2" hidden="hidden" class="error-message"></div>
+                    <button type="Button" class="button__submit form__submit" onclick="save_search_favorite2()">
                         <span class="button__text">Save</span>
                         <i class="button__icon fa fa-chevron-right"></i>
                     </button>
@@ -88,20 +131,22 @@
         document.getElementById(id).value = formattedNumber
     }
 
-    async function save_search_favorite(){
-        const user_favorite_location = document.getElementById("user_favorite_location").value
-        const user_favorite_space_from = document.getElementById("user_favorite_space_from").value
-        const user_favorite_space_to = document.getElementById("user_favorite_space_to").value
-        const user_favorite_price_from = document.getElementById("user_favorite_price_from").value
-        const user_favorite_price_to = document.getElementById("user_favorite_price_to").value
-        const user_favorite_floor_from = document.getElementById("user_favorite_floor_from").value
-        const user_favorite_floor_to = document.getElementById("user_favorite_floor_to").value
+    async function save_search_favorite1(){
+        const user_favorite_id = document.getElementById("user_favorite_id1").value
+        const user_favorite_location = document.getElementById("user_favorite_location1").value
+        const user_favorite_space_from = document.getElementById("user_favorite_space_from1").value
+        const user_favorite_space_to = document.getElementById("user_favorite_space_to1").value
+        const user_favorite_price_from = document.getElementById("user_favorite_price_from1").value
+        const user_favorite_price_to = document.getElementById("user_favorite_price_to1").value
+        const user_favorite_floor_from = document.getElementById("user_favorite_floor_from1").value
+        const user_favorite_floor_to = document.getElementById("user_favorite_floor_to1").value
 
         let access_token = localStorage.getItem("access_token")
         if(!access_token){
             console.log("Error: No auth object found")
         }
         const data = {
+            favorite_id: user_favorite_id,
             location: user_favorite_location,
             space_from: user_favorite_space_from,
             space_to: user_favorite_space_to,
@@ -133,6 +178,61 @@
             popup.classList.toggle("show");
             document.getElementById("overlay").style.display = "block";
             
+
+        }catch (error){
+            console.error(error)
+            document.getElementById("error_msg").innerHTML = "Unexpected error";
+            document.getElementById('error_msg').hidden = false
+        }
+    }
+
+    async function save_search_favorite2(){
+        const user_favorite_id = document.getElementById("user_favorite_id2").value
+        const user_favorite_location = document.getElementById("user_favorite_location2").value
+        const user_favorite_space_from = document.getElementById("user_favorite_space_from2").value
+        const user_favorite_space_to = document.getElementById("user_favorite_space_to1").value
+        const user_favorite_price_from = document.getElementById("user_favorite_price_from2").value
+        const user_favorite_price_to = document.getElementById("user_favorite_price_to2").value
+        const user_favorite_floor_from = document.getElementById("user_favorite_floor_from2").value
+        const user_favorite_floor_to = document.getElementById("user_favorite_floor_to2").value
+
+        let access_token = localStorage.getItem("access_token")
+        if(!access_token){
+            console.log("Error: No auth object found")
+        }
+        const data = {
+            favorite_id: user_favorite_id,
+            location: user_favorite_location,
+            space_from: user_favorite_space_from,
+            space_to: user_favorite_space_to,
+            price_from: user_favorite_price_from,
+            price_to: user_favorite_price_to,
+            floor_from: user_favorite_floor_from,
+            floor_to: user_favorite_floor_to
+
+           }
+            const apiUrl = '/create/favorite_search';
+            const requestOptions = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization':'Bearer '+access_token,
+              },
+              body: JSON.stringify(data),
+            }
+
+        try{
+            const response = await  fetch(apiUrl, requestOptions)
+            if(!response.ok){
+                console.error(response)
+                document.getElementById("error_msg").innerHTML = "Unexpected error";
+                document.getElementById('error_msg').hidden = false
+                return;
+            }
+            let popup = document.getElementById("myPopup");
+            popup.classList.toggle("show");
+            document.getElementById("overlay").style.display = "block";
+
 
         }catch (error){
             console.error(error)
