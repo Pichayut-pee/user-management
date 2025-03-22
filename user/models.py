@@ -24,7 +24,7 @@ class UsersProfile(models.Model):
     user = models.OneToOneField(Users, on_delete=models.CASCADE, primary_key=True)
     email = models.TextField(max_length=512, unique=True)
     name = models.TextField(max_length=512)
-
+    update_at = models.DateTimeField(auto_now=True)
 
 class UsersFavoriteSearch(models.Model):
     id = models.AutoField(primary_key=True)
@@ -42,6 +42,7 @@ class UsersFavoriteSearch(models.Model):
     location_search = models.CharField(max_length=1000 ,blank=True, null=True)
     desc_search = models.CharField(max_length=1000 ,blank=True, null=True)
     limit = models.IntegerField(default=5)
+    update_at = models.DateTimeField(auto_now=True)
 
     def serialize(self):
         return {

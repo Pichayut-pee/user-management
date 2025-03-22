@@ -32,11 +32,11 @@
                     <select name="user_favorite_location" id="user_favorite_location1">
                       <option value="พลัม,แจ้งวัฒนะ,สเตชั่น" {% if favorite_search_1.location_search == 'พลัม,แจ้งวัฒนะ,สเตชั่น' %}selected{% endif %}>พลัม แจ้งวัฒนะ สเตชั่น</option>
                       <option value="ลุมพินี,เพลส,รามอินทรา,หลักสี" {% if favorite_search_1.location_search == 'ลุมพินี,เพลส,รามอินทรา,หลักสี' %}selected{% endif %}>ลุมพินี เพลส รามอินทรา หลักสี่</option>
-                      <option value="ลุมพินี,วิลล์รามอินทรา,หลักสี่" {% if favorite_search_1.location_search == 'ลุมพินี,วิลล์รามอินทรา,หลักสี่' %}selected{% endif %}>ลุมพินี วิลล์รามอินทรา หลักสี่่</option>
+                      <option value="ลุมพินี,วิลล์,รามอินทรา,หลักสี่" {% if favorite_search_1.location_search == 'ลุมพินี,วิลล์,รามอินทรา,หลักสี่' %}selected{% endif %}>ลุมพินี วิลล์ รามอินทรา หลักสี่</option>
                       <option value="ดีคอนโด,จรัญ,บางขุนนนท์" {% if favorite_search_1.location_search == 'ดีคอนโด,จรัญ,บางขุนนนท์' %}selected{% endif %}>ดีคอนโด จรัญ บางขุนนนท์</option>
                       <option value="ดีคอนโด,รามอินทรา" {% if favorite_search_1.location_search == 'ดีคอนโด,รามอินทรา' %}selected{% endif %}>ดีคอนโด รามอินทรา</option>
-                      <option value="รีเจ้นท์,โฮม 18" {% if favorite_search_1.location_search == 'รีเจ้นท์,โฮม 18' %}selected{% endif %}>รีเจ้นท์ โฮม 18</option>
-                      <option value="รีเจ้นท์,โฮม 15" {% if favorite_search_1.location_search == 'รีเจ้นท์,โฮม 15' %}selected{% endif %}>รีเจ้นท์ โฮม 15</option>
+                      <option value="รีเจ้นท์,โฮม,18" {% if favorite_search_1.location_search == 'รีเจ้นท์,โฮม,18' %}selected{% endif %}>รีเจ้นท์ โฮม 18</option>
+                      <option value="รีเจ้นท์,โฮม,15" {% if favorite_search_1.location_search == 'รีเจ้นท์,โฮม,15' %}selected{% endif %}>รีเจ้นท์ โฮม 15</option>
                     </select>
                     <div class="text__field">
                         <label for="user_favorite_space_from1"><i class="button__icon fa fa-home"></i> ขนาดห้องที่ต้องการ (ตร.ม.)</label>
@@ -65,7 +65,16 @@
                         <span class="button__text">Save</span>
                         <i class="button__icon fa fa-chevron-right"></i>
                     </button>
-                    <label>Condo2</label>
+                    <div class="popup">
+
+                        <span class="popuptext" id="myPopup1">
+                            <div class="checkmark"></div>
+                            Your favorite has been saved
+                            <button type="Button" class="button__width_30"  onclick="off_overlay()" >OK</button>
+
+                        </span>
+                    </div>
+                                    <label>Condo2</label>
                     <hr class="rounded">
                      <input type="hidden" id="user_favorite_id2" value="{{favorite_search_2.id}}">
                     <label for="user_favorite_location2">  <i class="button__icon fa fa-map-o"></i> เลือกคอนโด</label>
@@ -105,25 +114,28 @@
                         <span class="button__text">Save</span>
                         <i class="button__icon fa fa-chevron-right"></i>
                     </button>
+                    <div class="popup">
+
+                        <span class="popuptext" id="myPopup2">
+                            <div class="checkmark"></div>
+                            Your favorite has been saved
+                            <button type="Button" class="button__width_30"  onclick="off_overlay()" >OK</button>
+
+                        </span>
+                    </div>
                 </form>
 
     </div>
-     <div class="popup">
 
-        <span class="popuptext" id="myPopup">
-            <div class="checkmark"></div>
-            Your favorite has been saved
-            <button type="Button" class="button__width_30"  onclick="off_overlay()" >OK</button>
-
-        </span>
-    </div>
 </body>
 </html>
 <script type="text/javascript">
     function off_overlay() {
         document.getElementById("overlay").style.display = "none";
-        let popup = document.getElementById("myPopup");
-        popup.classList.remove("show")
+        let popup1 = document.getElementById("myPopup1");
+        popup1.classList.remove("show")
+        let popup2 = document.getElementById("myPopup2");
+        popup2.classList.remove("show")
     }
     async function numberWithCommas(id) {
         const number = document.getElementById(id).value
@@ -174,7 +186,7 @@
                 document.getElementById('error_msg').hidden = false
                 return;
             }
-            let popup = document.getElementById("myPopup");
+            let popup = document.getElementById("myPopup1");
             popup.classList.toggle("show");
             document.getElementById("overlay").style.display = "block";
             
@@ -190,7 +202,7 @@
         const user_favorite_id = document.getElementById("user_favorite_id2").value
         const user_favorite_location = document.getElementById("user_favorite_location2").value
         const user_favorite_space_from = document.getElementById("user_favorite_space_from2").value
-        const user_favorite_space_to = document.getElementById("user_favorite_space_to1").value
+        const user_favorite_space_to = document.getElementById("user_favorite_space_to2").value
         const user_favorite_price_from = document.getElementById("user_favorite_price_from2").value
         const user_favorite_price_to = document.getElementById("user_favorite_price_to2").value
         const user_favorite_floor_from = document.getElementById("user_favorite_floor_from2").value
@@ -229,7 +241,7 @@
                 document.getElementById('error_msg').hidden = false
                 return;
             }
-            let popup = document.getElementById("myPopup");
+            let popup = document.getElementById("myPopup2");
             popup.classList.toggle("show");
             document.getElementById("overlay").style.display = "block";
 

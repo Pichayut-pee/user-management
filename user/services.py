@@ -41,7 +41,7 @@ def get_user_favorite_search_by_user_id(id):
     users = Users.objects.filter(id=id)
     if len(users) == 0:
         raise UserNotFoundException
-    user_favorite_search = UsersFavoriteSearch.objects.filter(user=users[0])
+    user_favorite_search = UsersFavoriteSearch.objects.filter(user=users[0]).order_by('id')
     return user_favorite_search
 
 
@@ -89,6 +89,9 @@ def create_user_favorite_search(favorite_search_id
             user_favorite_search[0].desc_search = desc_search
             user_favorite_search[0].limit = limit
             user_favorite_search[0].save()
+
+            # clear redis by user id
+
             return
     except Exception as e:
         logger.error(e)
