@@ -91,3 +91,4 @@ user/__pycache__/admin.cpython-39.pyc
 user/migrations/__pycache__/0011_rename_location_usersfavoritesearch_location_search_and_more.cpython-311.pyc
 user/migrations/__pycache__/0012_usersfavoritesearch_limit.cpython-311.pyc
 user/migrations/__pycache__/0013_alter_usersfavoritesearch_id.cpython-311.pyc
+user/migrations/__pycache__/0014_usersfavoritesearch_update_at_usersprofile_update_at.cpython-311.pyc

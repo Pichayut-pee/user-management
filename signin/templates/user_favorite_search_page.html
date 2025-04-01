@@ -29,8 +29,11 @@
                    <hr class="rounded"/>
                   <input type="hidden" id="user_favorite_id1" value="{{favorite_search_1.id}}">
                   <label for="user_favorite_location1">  <i class="button__icon fa fa-map-o"></i> เลือกคอนโด</label>
+
                     <select name="user_favorite_location" id="user_favorite_location1">
-                      <option value="พลัม,แจ้งวัฒนะ,สเตชั่น" {% if favorite_search_1.location_search == 'พลัม,แจ้งวัฒนะ,สเตชั่น' %}selected{% endif %}>พลัม แจ้งวัฒนะ สเตชั่น</option>
+                        <!-- Default unselected option -->
+                      <option value="" {% if favorite_search_1.location_search == '' %}selected{% endif %}>-- Select Location --</option>
+                      <option value="พลัม,แจ้งวัฒนะ" {% if favorite_search_1.location_search == 'พลัม,แจ้งวัฒนะ' %}selected{% endif %}>พลัม แจ้งวัฒนะ</option>
                       <option value="ลุมพินี,เพลส,รามอินทรา,หลักสี" {% if favorite_search_1.location_search == 'ลุมพินี,เพลส,รามอินทรา,หลักสี' %}selected{% endif %}>ลุมพินี เพลส รามอินทรา หลักสี่</option>
                       <option value="ลุมพินี,วิลล์,รามอินทรา,หลักสี่" {% if favorite_search_1.location_search == 'ลุมพินี,วิลล์,รามอินทรา,หลักสี่' %}selected{% endif %}>ลุมพินี วิลล์ รามอินทรา หลักสี่</option>
                       <option value="ดีคอนโด,จรัญ,บางขุนนนท์" {% if favorite_search_1.location_search == 'ดีคอนโด,จรัญ,บางขุนนนท์' %}selected{% endif %}>ดีคอนโด จรัญ บางขุนนนท์</option>
@@ -79,7 +82,9 @@
                      <input type="hidden" id="user_favorite_id2" value="{{favorite_search_2.id}}">
                     <label for="user_favorite_location2">  <i class="button__icon fa fa-map-o"></i> เลือกคอนโด</label>
                     <select name="user_favorite_location" id="user_favorite_location2">
-                      <option value="พลัม,แจ้งวัฒนะ,สเตชั่น" {% if favorite_search_2.location_search == 'พลัม,แจ้งวัฒนะ,สเตชั่น' %}selected{% endif %}>พลัม แจ้งวัฒนะ สเตชั่น</option>
+                        <!-- Default unselected option -->
+                      <option value="" {% if favorite_search_1.location_search == '' %}selected{% endif %}>-- Select Location --</option>
+                      <option value="พลัม,แจ้งวัฒนะ" {% if favorite_search_2.location_search == 'พลัม,แจ้งวัฒนะ' %}selected{% endif %}>พลัม แจ้งวัฒนะ</option>
                       <option value="ลุมพินี,เพลส,รามอินทรา,หลักสี" {% if favorite_search_2.location_search == 'ลุมพินี,เพลส,รามอินทรา,หลักสี' %}selected{% endif %}>ลุมพินี เพลส รามอินทรา หลักสี่</option>
                       <option value="ลุมพินี,วิลล์รามอินทรา,หลักสี่" {% if favorite_search_2.location_search == 'ลุมพินี,วิลล์รามอินทรา,หลักสี่' %}selected{% endif %}>ลุมพินี วิลล์รามอินทรา หลักสี่่</option>
                       <option value="ดีคอนโด,จรัญ,บางขุนนนท์" {% if favorite_search_2.location_search == 'ดีคอนโด,จรัญ,บางขุนนนท์' %}selected{% endif %}>ดีคอนโด จรัญ บางขุนนนท์</option>

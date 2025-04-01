@@ -2,6 +2,7 @@ import logging
 
 from django.core.paginator import Paginator
 from django.db import transaction
+from django_redis import get_redis_connection
 
 from signin.utils.exception import UserNotFoundException, BadRequestException
 from .models import Users, UsersProfile, UsersFavoriteSearch
@@ -10,7 +11,7 @@ from .utils.exception import DatabaseErrorException
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
+redis_conn = get_redis_connection("default")
 
 @transaction.atomic
 def register_user(username, password, name, email, line_user_id):
@@ -91,6 +92,7 @@ def create_user_favorite_search(favorite_search_id
             user_favorite_search[0].save()
 
             # clear redis by user id
+            redis_conn.delete(str(user_id)+'_'+str(favorite_search_id))
 
             return
     except Exception as e:
